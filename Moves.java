@@ -84,4 +84,20 @@ public class Moves {
 
         }
     }
+    public void multiply(JTextField inreal,JTextField inimag, MyPanel image) {
+
+        Scanner s1 = new Scanner(inreal.getText());
+        int a = s1.nextInt();
+        Scanner s2 = new Scanner(inimag.getText());
+        int b = s2.nextInt();
+        
+        image.d1.multilp(a, b);
+        image.d2.multilp(a, b);
+      
+        image.repaint();
+        
+    }
+    
+    
+    
 }

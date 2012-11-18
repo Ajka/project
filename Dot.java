@@ -45,6 +45,13 @@ public class Dot {
         g.fillOval(x, y, r, r);
     }
 
+    public void multilp(int a, int b) {
+        int real = x * a - y * b;
+        int imag = x * b + y * a;
+        this.x = real;
+        this.y = imag;
+    }
+
     public boolean inDot(int x, int y) {
         return (x >= this.x) && (x <= this.x + this.r) && (y >= this.y)
                 && (y <= this.y + this.r);

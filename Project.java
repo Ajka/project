@@ -21,15 +21,21 @@ public class Project extends JPanel
 
     public Project() {
         JPanel panel = new JPanel();
+        JPanel buttons = new JPanel();
         final MyPanel pattern = new MyPanel();
         final MyPanel image = new MyPanel();
 
         add(pattern);
         add(image);
+        add(buttons);
         add(panel);
+        
+        buttons.setLayout(new GridLayout(2,0 ));
+        panel.setLayout(new GridLayout(2,0 ));
         // panel.setLayout(new BoxLayout(panel,BoxLayout.PAGE_AXIS));
         JButton draw = new JButton("Vykresli");
-        panel.add(draw);
+        buttons.add(draw);
+       
 
         JLabel compl = new JLabel("z +");
         panel.add(compl);
@@ -41,6 +47,17 @@ public class Project extends JPanel
         panel.add(inputimag);
         JLabel imag = new JLabel("i");
         panel.add(imag);
+        
+        JLabel zmult= new JLabel("z *");
+        panel.add(zmult);
+        final JTextField inreal = new JTextField(3);
+        panel.add(inreal);
+        JLabel mreal = new JLabel("+");
+        panel.add(mreal);
+        final JTextField inimag = new JTextField(3);
+        panel.add(inimag);
+        JLabel mimag = new JLabel("i");
+        panel.add(mimag);
 
 
 
@@ -50,13 +67,15 @@ public class Project extends JPanel
                 Moves m = new Moves();
                 m.movex(inputreal, pattern, image);
                 m.movey(inputimag, pattern, image);
-
+                m.multiply(inreal,inimag, image);
             }
         ;
         });
+    
+        
         
         JButton continuously = new JButton("Plynule");
-        panel.add(continuously);
+        buttons.add(continuously);
 
         timer = new Timer(1000, new ActionListener() {
             @Override
@@ -70,6 +89,10 @@ public class Project extends JPanel
 
 
         continuously.addActionListener(this);
+        
+        
+        
+        
     }
 
     @Override
@@ -80,7 +103,7 @@ public class Project extends JPanel
     private static void createAndShowGUI() {
         JFrame frame = new JFrame("Komplexne funkcie");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new GridLayout(1, 3));
+        frame.setLayout(new GridLayout(1, 4));
 
         JComponent pane = new Project();
         pane.setOpaque(true);
