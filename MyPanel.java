@@ -3,6 +3,7 @@ package project;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -12,8 +13,9 @@ public class MyPanel extends JPanel {
     private static final long serialVersionUID = 1301836524800050587L; //?
     private int x = 75;
     private int r = 7;
-    public Dot d1 = null;
-    public Dot d2 = null;
+    public ArrayList<Dot> dots = new ArrayList<Dot>();
+    Dot d1;
+    Dot d2;
     public Dot centre = new Dot(0, 0, r);
 
     public MyPanel() {
@@ -21,6 +23,8 @@ public class MyPanel extends JPanel {
 
         d1 = new Dot(0, 50, r);
         d2 = new Dot(0, -50, r);
+        dots.add(d1);
+        dots.add(d2);
 
         int height = getHeight();
         int width = getWidth();

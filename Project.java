@@ -3,7 +3,6 @@ package project;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -29,13 +28,13 @@ public class Project extends JPanel
         add(image);
         add(buttons);
         add(panel);
-        
-        buttons.setLayout(new GridLayout(2,0 ));
-        panel.setLayout(new GridLayout(2,0 ));
+
+        buttons.setLayout(new GridLayout(2, 0));
+        panel.setLayout(new GridLayout(2, 0));
         // panel.setLayout(new BoxLayout(panel,BoxLayout.PAGE_AXIS));
         JButton draw = new JButton("Vykresli");
         buttons.add(draw);
-       
+
 
         JLabel compl = new JLabel("z +");
         panel.add(compl);
@@ -47,8 +46,8 @@ public class Project extends JPanel
         panel.add(inputimag);
         JLabel imag = new JLabel("i");
         panel.add(imag);
-        
-        JLabel zmult= new JLabel("z *");
+
+        JLabel zmult = new JLabel("z *");
         panel.add(zmult);
         final JTextField inreal = new JTextField(3);
         panel.add(inreal);
@@ -65,9 +64,8 @@ public class Project extends JPanel
             @Override
             public void actionPerformed(ActionEvent event) {
                 Moves m = new Moves();
-                m.movex(inputreal, pattern, image);
-                m.movey(inputimag, pattern, image);
-                m.multiply(inreal,inimag, image);
+                m.movexy(inputreal, inputimag, pattern, image);
+                m.multiply(inreal, inimag, pattern, image);
             }
         ;
         });
@@ -86,13 +84,7 @@ public class Project extends JPanel
                 m.tmovey(inputimag, pattern, image, timer);
             }
         });
-
-
         continuously.addActionListener(this);
-        
-        
-        
-        
     }
 
     @Override

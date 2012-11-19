@@ -45,6 +45,16 @@ public class Dot {
         g.fillOval(x, y, r, r);
     }
 
+    public void movex(int l) {
+        int move = x + l;
+        this.x = move;
+    }
+
+    public void movey(int l) {
+        int move = y + l;
+        this.y = move;
+    }
+
     public void multilp(int a, int b) {
         int real = x * a - y * b;
         int imag = x * b + y * a;
