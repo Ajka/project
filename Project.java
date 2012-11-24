@@ -3,6 +3,7 @@ package project;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Scanner;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -29,7 +30,7 @@ public class Project extends JPanel
         add(buttons);
         add(panel);
 
-        buttons.setLayout(new GridLayout(2, 0));
+        buttons.setLayout(new GridLayout(3, 0));
         panel.setLayout(new GridLayout(2, 0));
         // panel.setLayout(new BoxLayout(panel,BoxLayout.PAGE_AXIS));
         JButton draw = new JButton("Vykresli");
@@ -63,9 +64,16 @@ public class Project extends JPanel
         draw.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                Moves m = new Moves();
-                m.movexy(inputreal, inputimag, pattern, image);
-                m.multiply(inreal, inimag, pattern, image);
+                Function add= new Add(pattern,image);
+                Scanner s1=new Scanner(inputreal.getText());
+                Scanner s2=new Scanner(inputimag.getText());
+                add.evaluate(s1.nextDouble(),s2.nextDouble());
+                
+                Function mul=new Mul(pattern,image);
+                Scanner s3=new Scanner(inreal.getText());
+                Scanner s4=new Scanner(inimag.getText());
+                mul.evaluate(s3.nextDouble(),s4.nextDouble());
+             
             }
         ;
         });
@@ -78,15 +86,27 @@ public class Project extends JPanel
         timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                Moves m = new Moves();
+                
 
-                m.tmovex(inputreal, pattern, image, timer);
-                m.tmovey(inputimag, pattern, image, timer);
+            
             }
         });
         continuously.addActionListener(this);
+   
+    
+     JButton clear = new JButton("Zmaž");
+     buttons.add(clear);
+      clear.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                image.dots=pattern.dots;
+                System.out.println("zmaz");
+                image.repaint();           
+            }
+        ;
+        });
     }
-
+       
     @Override
     public void actionPerformed(ActionEvent ae) {
         timer.start();
