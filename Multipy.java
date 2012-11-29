@@ -1,22 +1,21 @@
 package project;
 
-public class Add extends Function {
+public class Multipy extends Function {
 
     double a;
     double b;
 
-    public Add(double a, double b) {
+    public Multipy(double a, double b) {
         this.a = a;
         this.b = b;
     }
 
-    public Add(Dot d) {
+    public Multipy(Dot d) {
         this.a = d.getX();
         this.b = d.getY();
     }
 
     public void evaluate(Dot d) {
-        d.movex(a);
-        d.movey(b);
+        d.multiplyDot(a, b);
     }
 }

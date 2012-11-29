@@ -64,16 +64,19 @@ public class Project extends JPanel
         draw.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                Function add= new Add(pattern,image);
+                
                 Scanner s1=new Scanner(inputreal.getText());
                 Scanner s2=new Scanner(inputimag.getText());
-                add.evaluate(s1.nextDouble(),s2.nextDouble());
+                Function add= new Add(s1.nextDouble(),s2.nextDouble());
+                RepaintGraph rg=new RepaintGraph(pattern, image, add);
+                rg.repaintgraph();
                 
-                Function mul=new Mul(pattern,image);
+               
                 Scanner s3=new Scanner(inreal.getText());
                 Scanner s4=new Scanner(inimag.getText());
-                mul.evaluate(s3.nextDouble(),s4.nextDouble());
-             
+                Function mul=new Multipy(s3.nextDouble(),s4.nextDouble());
+                RepaintGraph m=new RepaintGraph(pattern, image, mul);
+                m.repaintgraph();
             }
         ;
         });
