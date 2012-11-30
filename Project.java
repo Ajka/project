@@ -74,7 +74,7 @@ public class Project extends JPanel
                
                 Scanner s3=new Scanner(inreal.getText());
                 Scanner s4=new Scanner(inimag.getText());
-                Function mul=new Multipy(s3.nextDouble(),s4.nextDouble());
+                Function mul=new Multiply(s3.nextDouble(),s4.nextDouble());
                 RepaintGraph m=new RepaintGraph(pattern, image, mul);
                 m.repaintgraph();
             }

@@ -14,7 +14,8 @@ public class RepaintGraph {
 
     public void repaintgraph() {
         for (int i = 0; i < pattern.dots.size(); i++) {
-            f.evaluate(image.dots.get(i));
+            image.dots.add(f.evaluate(pattern.dots.get(i)));
+          //  f.evaluate(image.dots.get(i));
         }
         image.repaint();
     }

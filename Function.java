@@ -1,8 +1,8 @@
 package project;
 
-abstract class Function {
+interface Function {
 
-    Dot d;
+  
 
-    public abstract void evaluate(Dot d);
+    public Dot evaluate(Dot d);
 }

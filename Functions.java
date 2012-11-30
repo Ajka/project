@@ -2,7 +2,7 @@ package project;
 
 import java.util.ArrayList;
 
-public class Functions extends Function {
+public class Functions {
 
     ArrayList<Function> functions = null;
 
@@ -14,10 +14,10 @@ public class Functions extends Function {
         functions.add(f);
     }
 
-    @Override
-    public void evaluate(Dot d) {
+   
+    public void evaluat(Dot d) {
         for (Function f : functions) {
             f.evaluate(d);
         }
-    }
+    }    
 }

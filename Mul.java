@@ -1,6 +1,6 @@
 package project;
 
-public class Mul extends Function {
+public class Mul implements Function {
 
     private double eps = 5.0;
 
@@ -37,7 +37,9 @@ public class Mul extends Function {
     }
 
     @Override
-    public void evaluate(Dot d) {
+    public Dot evaluate(Dot d) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+  
 }
