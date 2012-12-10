@@ -1,8 +1,12 @@
 package project;
 
+import project.functions.Multiply;
+import project.functions.Add;
+import project.functions.Function;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -12,13 +16,14 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
+import project.functions.Mul;
+import project.shapes.Line;
 
-public class Project extends JPanel
-        implements ActionListener {
+public class Project extends JPanel implements ActionListener {
 
     private JButton continuously;
     private Timer timer;
-
+   
     public Project() {
         JPanel panel = new JPanel();
         JPanel buttons = new JPanel();
@@ -67,16 +72,23 @@ public class Project extends JPanel
                 
                 Scanner s1=new Scanner(inputreal.getText());
                 Scanner s2=new Scanner(inputimag.getText());
-                Function add= new Add(s1.nextDouble(),s2.nextDouble());
-                RepaintGraph rg=new RepaintGraph(pattern, image, add);
-                rg.repaintgraph();
+                Complex c= new Complex(s1.nextDouble(),s2.nextDouble());
+                Function add= new Add();
+                RepaintGraph rg=new RepaintGraph(pattern, image, add);               
+                rg.repaintgraph(c);
                 
                
                 Scanner s3=new Scanner(inreal.getText());
                 Scanner s4=new Scanner(inimag.getText());
-                Function mul=new Multiply(s3.nextDouble(),s4.nextDouble());
-                RepaintGraph m=new RepaintGraph(pattern, image, mul);
-                m.repaintgraph();
+                Complex c2= new Complex(s3.nextDouble(),s4.nextDouble());
+                Mul m=new Mul();
+                Complex cm1=new Complex(WIDTH/2, WIDTH/2+10.0);
+                 Complex cm2=new Complex(WIDTH/2-15.0, WIDTH/2+15.0);
+                Line l=new Line(cm1,cm2);
+                m.mult(l, c, pattern, image);
+                //Function mul=new Multiply();
+                //RepaintGraph m=new RepaintGraph(pattern, image, mul);
+                //m.repaintgraph();
             }
         ;
         });

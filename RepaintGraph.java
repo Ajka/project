@@ -1,5 +1,8 @@
 package project;
 
+import project.functions.Function;
+import project.shapes.Dot;
+
 public class RepaintGraph {
 
     MyPanel pattern;
@@ -12,10 +15,10 @@ public class RepaintGraph {
         this.f = f;
     }
 
-    public void repaintgraph() {
+    public void repaintgraph(Complex op) {
         for (int i = 0; i < pattern.dots.size(); i++) {
-            image.dots.add(f.evaluate(pattern.dots.get(i)));
-          //  f.evaluate(image.dots.get(i));
+          Complex a=f.evaluate(pattern.dots.get(i).toComplex(),op);
+          image.dots.set(i,a.toDot());
         }
         image.repaint();
     }

@@ -1,6 +1,9 @@
-package project;
+package project.functions;
 
+import project.functions.Function;
+import project.shapes.Dot;
 import java.util.ArrayList;
+import project.Complex;
 
 public class Functions {
 
@@ -14,10 +17,9 @@ public class Functions {
         functions.add(f);
     }
 
-   
-    public void evaluat(Dot d) {
+    public void evaluate(Complex c, Complex op) {
         for (Function f : functions) {
-            f.evaluate(d);
+            f.evaluate(c, op);
         }
-    }    
+    }
 }

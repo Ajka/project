@@ -1,8 +1,10 @@
 package project;
 
+import project.shapes.Dot;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.awt.geom.AffineTransform;
 import javax.swing.BorderFactory;
@@ -13,14 +15,14 @@ public class MyPanel extends JPanel {
     private static final long serialVersionUID = 1301836524800050587L; //?
     private double x = 75;
     private double r = 7.0;
-    public ArrayList<Dot> dots = new ArrayList<Dot>();
+    public ArrayList<Dot> dots = new ArrayList<Dot>(); 
     Dot d1;
     Dot d2;
     public Dot centre = new Dot(0, 0, r);
 
     public MyPanel() {
 
-
+        
         d1 = new Dot(0.0, 50.0, r);
         d2 = new Dot(0.0, -50.0, r);
         dots.add(d1);
@@ -29,7 +31,6 @@ public class MyPanel extends JPanel {
         int height = getHeight();
         int width = getWidth();
         setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        //setBorder(BorderFactory.createLineBorder(Color.yellow));
 
 
     }
@@ -43,14 +44,15 @@ public class MyPanel extends JPanel {
     public void paintComponent(final Graphics g) {
 
         super.paintComponent(g);
-
+      /*  Graphics2D g2 = (Graphics2D) g;
+      g2.scale(1.0,-1.0);*/
 
 
         int height = getHeight();
         int width = getWidth();
         g.translate(width / 2, width / 2);
-        AffineTransform aftransfom= new AffineTransform(); 
-        aftransfom.translate(0.0, -1.0);
+        /*AffineTransform aftransfom= new AffineTransform(); 
+        aftransfom.scale(1.0, -1.0);*/
         
         g.drawRect(-width / 2, -height / 2, height - 1, width - 1);
       
@@ -61,8 +63,8 @@ public class MyPanel extends JPanel {
 
        
         g.setColor(Color.BLACK);
-        d1.paintDot(g);
-        d2.paintDot(g);
+        d1.paint(g);
+        d2.paint(g);
         g.drawLine((int)d1.getX() + (int)r / 2,
                    (int)d1.getY() + (int)r / 2, 
                    (int)d2.getX() + (int)r / 2,
