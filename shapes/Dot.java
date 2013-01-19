@@ -28,11 +28,11 @@ public class Dot implements Shape{
         this.r = r;
     }
    
-    public Dot(Dot d) {
+   /* public Dot(Dot d) {
         this.x = d.getX();
         this.y = d.getY();
         this.r = d.getR();
-    }
+    }*/
     
     public void setX(double x) {
         this.x = x;
@@ -61,7 +61,7 @@ public class Dot implements Shape{
     public void paint(Graphics g) {
         Color c = Color.BLACK;
         g.setColor(c);
-        g.fillOval((int)x, (int)y, (int)r, (int)r);      
+        g.fillOval((int)x-(int)r/2, (int)y-(int)r/2, (int)r, (int)r);      
     }
 
     public Complex toComplex(){

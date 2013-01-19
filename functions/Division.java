@@ -2,7 +2,7 @@ package project.functions;
 
 import project.Complex;
 
-public class Divide implements Function {
+public class Division implements Function {
 
     @Override
     public Complex evaluate(Complex c, Complex op) {
