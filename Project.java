@@ -114,9 +114,12 @@ public class Project extends JPanel implements ActionListener {
       clear.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-              //  image.dots=pattern.dots;
+            
                 System.out.println("zmaz");
-                image.repaint();           
+                for(PatIm p:image.dots ){
+                    p.setImage(p.getPattern());                    
+                }
+                repaint(); 
             }
         ;
         });

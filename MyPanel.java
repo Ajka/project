@@ -13,7 +13,7 @@ import project.shapes.Line;
 
 public class MyPanel extends JPanel implements Panel{
 
-    private static final long serialVersionUID = 1301836524800050587L; //?
+    private static final long serialVersionUID = 1301836524800050587L; 
     private double x = 75;
     private double r = 7.0;
  
@@ -70,22 +70,16 @@ public class MyPanel extends JPanel implements Panel{
        
         g.setColor(Color.BLACK);
         
-        for (PatIm d : dots) {
-          d.getImage().toDot().paint(g);
-            
+        for (int i=0;i<dots.size()-1;i++){
+            Complex c1=dots.get(i).getImage();
+            Complex c2=dots.get(i+1).getImage();
+            Line l=new Line(c1,c2);
+            c1.toDot().paint(g);
+            c1.toDot().paint(g);
+            l.paint(g);
         }
         
-        for (Line l : lines) {
-          l.paint(g);
-            
-        }
-        
-      //  dots.get(1).getImage().toDot().paint(g);
-    /*    g.drawLine((int)d1.image.getRe()+(int)r/2 ,
-                (int)d1.image.getIm()+(int)r/2 , 
-                (int)d2.image.getRe()+(int)r/2 ,
-                (int)d2.image.getIm()+(int)r/2 );*/
-        
+      
         
     }
 }

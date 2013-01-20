@@ -2,6 +2,7 @@ package project;
 
 import project.functions.Function;
 import project.shapes.Dot;
+import project.shapes.Line;
 
 public class RepaintGraph implements Panel{
 
@@ -19,6 +20,7 @@ public class RepaintGraph implements Panel{
         for (int i = 0; i < dots.size(); i++) {
           Complex a=f.evaluate(dots.get(i).getPattern(),op);
           dots.get(i).setImage(a);
+          
         }
         image.repaint();
     }

@@ -15,8 +15,8 @@ public class Line implements Shape{
     }
     @Override
     public void paint(Graphics g) {
-       Graphics2D g2 = (Graphics2D) g;
-       g2.draw(new Line2D.Double(c1.getRe(), c1.getIm(), c2.getRe(), c2.getIm()));
+     //  Graphics2D g2 = (Graphics2D) g;
+       g.drawLine((int)c1.getRe(),(int)c1.getIm(),(int)c2.getRe(),(int)c2.getIm());
     }
     
 }
