@@ -34,8 +34,7 @@ public class Mul implements Panel{
                 }
             }            
             dots.add(index+1,p);
-          
-            
+                     
             mult(p1,p,op);
             mult(p,p2,op);
         }
