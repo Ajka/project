@@ -1,22 +1,22 @@
 package project.shapes;
 
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.geom.Line2D;
 import project.Complex;
 
-public class Line implements Shape{
-    public Complex c1;
-    public Complex c2;
-    
-    public Line(Complex c1,Complex c2){
-        this.c1=c1;
-        this.c2=c2;
-    }
+public class Line implements Shape,project.Panel{
+   
     @Override
     public void paint(Graphics g) {
-     //  Graphics2D g2 = (Graphics2D) g;
-       g.drawLine((int)c1.getRe(),(int)c1.getIm(),(int)c2.getRe(),(int)c2.getIm());
+    
+        for (int i=0;i<dots.size()-1;i++){
+            Complex c1=dots.get(i).getImage();
+            Complex c2=dots.get(i+1).getImage();
+           
+            c1.toDot().paint(g);
+            c1.toDot().paint(g);
+            g.drawLine((int)c1.getRe(),(int)c1.getIm(),(int)c2.getRe(),(int)c2.getIm());
+            
+        }
     }
     
 }

@@ -1,17 +1,15 @@
 package project;
 
 import project.functions.Function;
-import project.shapes.Dot;
-import project.shapes.Line;
 
 public class RepaintGraph implements Panel{
 
-    MyPanel pattern;
+
     MyPanel image;
     Function f;
 
-    public RepaintGraph(MyPanel pattern, MyPanel image, Function f) {
-        this.pattern = pattern;
+    public RepaintGraph(MyPanel image, Function f) {
+     
         this.image = image;
         this.f = f;
     }

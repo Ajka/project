@@ -6,7 +6,6 @@ import project.functions.Function;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -17,9 +16,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import project.functions.Mul;
-import project.shapes.Line;
 
-public class Project extends JPanel implements ActionListener {
+public class Project extends JPanel implements ActionListener,Panel{
 
     private JButton continuously;
     private Timer timer;
@@ -74,7 +72,7 @@ public class Project extends JPanel implements ActionListener {
                 Scanner s2=new Scanner(inputimag.getText());
                 Complex c= new Complex(s1.nextDouble(),s2.nextDouble());
                 Function add= new Adition();
-                RepaintGraph rg=new RepaintGraph(pattern, image, add);               
+                RepaintGraph rg=new RepaintGraph(image, add);               
                 rg.repaintgraph(c);
                 
                
@@ -82,13 +80,10 @@ public class Project extends JPanel implements ActionListener {
                 Scanner s4=new Scanner(inimag.getText());
                 Complex c2= new Complex(s3.nextDouble(),s4.nextDouble());
                 Mul m=new Mul();
-                Complex cm1=new Complex(WIDTH/2, WIDTH/2+10.0);
-                 Complex cm2=new Complex(WIDTH/2-15.0, WIDTH/2+15.0);
-                Line l=new Line(cm1,cm2);
-                m.mult(l, c, pattern, image);
-                //Function mul=new Multiplication();
-                //RepaintGraph m=new RepaintGraph(pattern, image, mul);
-                //m.repaintgraph();
+                m.mult(dots.get(0), dots.get(1), c2);
+                Function multiplication=new Multiplication();
+                RepaintGraph rg2=new RepaintGraph(image, multiplication);
+                rg2.repaintgraph(c2);
             }
         ;
         });

@@ -1,7 +1,5 @@
 package project.functions;
 
-import project.functions.Function;
-import project.shapes.Dot;
 import java.util.ArrayList;
 import project.Complex;
 

@@ -1,7 +1,5 @@
 package project;
 
-import java.awt.Color;
-import java.awt.Graphics;
 import project.shapes.Dot;
 
 public class Complex {
@@ -86,9 +84,9 @@ public class Complex {
     public double getAngle() {
         return Math.atan2(this.im, this.re);
     }
-    
-    public Dot toDot(){
-        Dot d=new Dot();
+
+    public Dot toDot() {
+        Dot d = new Dot();
         d.setX(re);
         d.setY(im);
         return d;

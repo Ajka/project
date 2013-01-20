@@ -1,28 +1,20 @@
 package project.functions;
 
 import project.Complex;
-import project.MyPanel;
-import project.functions.Function;
-import project.shapes.Dot;
-import project.shapes.Line;
+import project.Panel;
+import project.PatIm;
 
-public class Mul{
-    Line l;
-    private double eps = 5.0;
 
-      public Mul(){
-     }
-/*
-     @Override
-     void evaluate(double a, double b) {
-     mult(image.dots.get(0), image.dots.get(1), a, b, pattern, image);
-     }*/
-    public void mult(Line l,Complex c, MyPanel pattern, MyPanel image) {
-        Complex n1=l.c1.mul(c);
-        Complex n2=l.c2.mul(c);
-        image.repaint();
-        
+public class Mul implements Panel{
+   
+    private double eps = 2.0;
 
+     
+    public void mult(PatIm p1,PatIm p2,Complex op) {
+        Multiplication m = new Multiplication();
+        Complex n1=m.evaluate(p1.getImage(), op);
+        Complex n2=m.evaluate(p2.getImage(), op);
+     
         double x1 = n1.getRe();
         double x2 = n2.getRe();
         double y1 = n1.getIm();
@@ -30,15 +22,22 @@ public class Mul{
 
         if (((Math.abs(x1) - Math.abs(x2)) > eps) || ((Math.abs(y1) - Math.abs(y2)) > eps)) {
        
-            Complex n = new Complex((x1+x2)/2,(y1+y2)/2);
-          /*  pattern.dots.add(image.dots.indexOf(d2), d);
-            image.dots = pattern.dots;*/
-            Line l1=new Line(l.c1,n);
-            Line l2=new Line(n,l.c2);
+            Complex n = new Complex((p1.getPattern().getRe()+p2.getPattern().getRe())/2,
+                                    (p1.getPattern().getIm()+p2.getPattern().getIm())/2);
+            PatIm p = new PatIm();
+            p.setImage(n);
+            p.setPattern(n);
+            int index=0;
+            for(PatIm t:dots){
+                if(p1.equals(t)){
+                    index=dots.indexOf(t);
+                }
+            }            
+            dots.add(index+1,p);
+          
             
-            mult(l1,c, pattern, image);
-            mult(l2,c, pattern, image);
-
+            mult(p1,p,op);
+            mult(p,p2,op);
         }
     }
 
