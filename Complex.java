@@ -85,10 +85,5 @@ public class Complex {
         return Math.atan2(this.im, this.re);
     }
 
-    public Dot toDot() {
-        Dot d = new Dot();
-        d.setX(re);
-        d.setY(im);
-        return d;
-    }
+   
 }

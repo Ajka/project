@@ -5,6 +5,6 @@ import project.shapes.Line;
 
 public interface Panel {
 
-    public ArrayList<PatIm> dots = new ArrayList<PatIm>();
+    public ArrayList<ValueImage> pairs = new ArrayList<ValueImage>();
     public ArrayList<Line> lines = new ArrayList<Line>();
 }

@@ -1,7 +1,7 @@
 package project;
 
 import project.functions.Multiplication;
-import project.functions.Adition;
+import project.functions.Addition;
 import project.functions.Function;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -71,7 +71,7 @@ public class Project extends JPanel implements ActionListener,Panel{
                 Scanner s1=new Scanner(inputreal.getText());
                 Scanner s2=new Scanner(inputimag.getText());
                 Complex c= new Complex(s1.nextDouble(),s2.nextDouble());
-                Function add= new Adition();
+                Function add= new Addition();
                 RepaintGraph rg=new RepaintGraph(image, add);               
                 rg.repaintgraph(c);
                 
@@ -80,7 +80,7 @@ public class Project extends JPanel implements ActionListener,Panel{
                 Scanner s4=new Scanner(inimag.getText());
                 Complex c2= new Complex(s3.nextDouble(),s4.nextDouble());
                 Mul m=new Mul();
-                m.mult(dots.get(0), dots.get(1), c2);
+                m.mult(pairs.get(0), pairs.get(1), c2);
                 Function multiplication=new Multiplication();
                 RepaintGraph rg2=new RepaintGraph(image, multiplication);
                 rg2.repaintgraph(c2);
@@ -111,8 +111,8 @@ public class Project extends JPanel implements ActionListener,Panel{
             public void actionPerformed(ActionEvent event) {
             
                 System.out.println("zmaz");
-                for(PatIm p:image.dots ){
-                    p.setImage(p.getPattern());                    
+                for(ValueImage p:image.pairs ){
+                    p.setImage(p.getValue());                    
                 }
                 repaint(); 
             }

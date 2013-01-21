@@ -13,19 +13,19 @@ public class MyPanel extends JPanel implements Panel {
     private static final long serialVersionUID = 1301836524800050587L;
     private double x = 75;
     private double r = 7.0;
-    PatIm d1 = new PatIm();
-    PatIm d2 = new PatIm();
+    ValueImage d1 = new ValueImage();
+    ValueImage d2 = new ValueImage();
     Complex centre = new Complex(0.0, 0.0);
     public Dot centreDot = new Dot(centre);
 
     public MyPanel() {
 
-        d1.setPattern(new Complex(0.0, 50.0));
-        d2.setPattern(new Complex(0.0, -50.0));
-        d1.setImage(new Complex(0.0, 50.0));
-        d2.setImage(new Complex(0.0, -50.0));
-        dots.add(d1);
-        dots.add(d2);
+        d1.setValue(new Complex(20.0, 50.0));
+        d2.setValue(new Complex(20.0, -50.0));
+        d1.setImage(new Complex(20.0, 50.0));
+        d2.setImage(new Complex(20.0, -50.0));
+        pairs.add(d1);
+        pairs.add(d2);
 
         int height = getHeight();
         int width = getWidth();
