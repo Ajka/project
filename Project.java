@@ -15,9 +15,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
-import project.functions.Mul;
 
-public class Project extends JPanel implements ActionListener,Panel{
+
+public class Project extends JPanel implements ActionListener{
 
     private JButton continuously;
     private Timer timer;
@@ -71,19 +71,18 @@ public class Project extends JPanel implements ActionListener,Panel{
                 Scanner s1=new Scanner(inputreal.getText());
                 Scanner s2=new Scanner(inputimag.getText());
                 Complex c= new Complex(s1.nextDouble(),s2.nextDouble());
-                Function add= new Addition();
-                RepaintGraph rg=new RepaintGraph(image, add);               
-                rg.repaintgraph(c);
+                Function add= new Addition(c);
+                add.drawImage(image.l, image);
                 
-               
+               /*
                 Scanner s3=new Scanner(inreal.getText());
                 Scanner s4=new Scanner(inimag.getText());
                 Complex c2= new Complex(s3.nextDouble(),s4.nextDouble());
                 Mul m=new Mul();
                 m.mult(pairs.get(0), pairs.get(1), c2);
-                Function multiplication=new Multiplication();
-                RepaintGraph rg2=new RepaintGraph(image, multiplication);
-                rg2.repaintgraph(c2);
+                Function multiplication=new Multiplication();              
+                rg.repaintgraph(multiplication,c2);*/
+                
             }
         ;
         });
@@ -111,9 +110,7 @@ public class Project extends JPanel implements ActionListener,Panel{
             public void actionPerformed(ActionEvent event) {
             
                 System.out.println("zmaz");
-                for(ValueImage p:image.pairs ){
-                    p.setImage(p.getValue());                    
-                }
+                
                 repaint(); 
             }
         ;

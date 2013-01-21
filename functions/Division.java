@@ -2,10 +2,16 @@ package project.functions;
 
 import project.Complex;
 
-public class Division implements Function {
+public class Division extends Function {
+
+    Complex c;
+
+    public Division(Complex c) {
+        this.c = c;
+    }
 
     @Override
-    public Complex evaluate(Complex c, Complex op) {
-        return c.div(op);
+    public Complex evaluate(Complex z) {
+        return z.div(c);
     }
 }

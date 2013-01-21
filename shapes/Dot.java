@@ -32,7 +32,7 @@ public class Dot implements Shape {
      this.y = d.getY();
      this.r = d.getR();
      }*/
-    public void setX(double x) {
+    /*public void setX(double x) {
         this.x = x;
     }
 
@@ -55,7 +55,7 @@ public class Dot implements Shape {
     public void setR(double w) {
         this.r = w;
     }
-
+*/
     public void paint(Graphics g) {
         Color c = Color.BLACK;
         g.setColor(c);
@@ -70,8 +70,8 @@ public class Dot implements Shape {
 
     }
 
-    public boolean inDot(double x, double y) {
+   /* public boolean inDot(double x, double y) {
         return (x >= this.x - r / 2) && (x <= this.x + r / 2)
                 && (y >= this.y - r / 2) && (y <= this.y + r / 2);
-    }
+    }*/
 }

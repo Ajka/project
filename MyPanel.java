@@ -8,24 +8,19 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import project.shapes.Line;
 
-public class MyPanel extends JPanel implements Panel {
+public class MyPanel extends JPanel {
 
     private static final long serialVersionUID = 1301836524800050587L;
     private double x = 75;
     private double r = 7.0;
-    ValueImage d1 = new ValueImage();
-    ValueImage d2 = new ValueImage();
     Complex centre = new Complex(0.0, 0.0);
     public Dot centreDot = new Dot(centre);
+    Complex c1 = new Complex(0.0, 50.0);
+    Complex c2 = new Complex(0.0, -50.0);
+    public Line l = new Line(c1, c2);
 
     public MyPanel() {
 
-        d1.setValue(new Complex(0.0, 50.0));
-        d2.setValue(new Complex(0.0, -50.0));
-        d1.setImage(new Complex(0.0, 50.0));
-        d2.setImage(new Complex(0.0, -50.0));
-        pairs.add(d1);
-        pairs.add(d2);
 
         int height = getHeight();
         int width = getWidth();
@@ -63,7 +58,6 @@ public class MyPanel extends JPanel implements Panel {
 
         g.setColor(Color.BLACK);
 
-        Line l = new Line();
         l.paint(g);
 
 
