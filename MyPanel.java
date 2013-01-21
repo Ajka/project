@@ -20,10 +20,10 @@ public class MyPanel extends JPanel implements Panel {
 
     public MyPanel() {
 
-        d1.setValue(new Complex(20.0, 50.0));
-        d2.setValue(new Complex(20.0, -50.0));
-        d1.setImage(new Complex(20.0, 50.0));
-        d2.setImage(new Complex(20.0, -50.0));
+        d1.setValue(new Complex(0.0, 50.0));
+        d2.setValue(new Complex(0.0, -50.0));
+        d1.setImage(new Complex(0.0, 50.0));
+        d2.setImage(new Complex(0.0, -50.0));
         pairs.add(d1);
         pairs.add(d2);
 

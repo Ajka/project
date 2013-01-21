@@ -7,7 +7,7 @@ import project.ValueImage;
 
 public class Mul implements Panel{
    
-    private double eps = 5.0;
+    private double eps = 25.0;
 
      
     public void mult(ValueImage p1,ValueImage p2,Complex op) {

@@ -8,7 +8,7 @@ public class ValueImage {
     private Complex image;
 
     public void evaluate(Function f, Complex c) {
-        this.image = f.evaluate(value, c);
+        this.image = f.evaluate(image, c);
     }
 
     public void setValue(Complex pattern) {
