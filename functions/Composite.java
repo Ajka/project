@@ -7,12 +7,11 @@ public class Composite extends Function {
 
     Function f;
     Function g;
-    Complex c;
 
-    public Composite(Function f, Function g, Complex c) {
+    public Composite(Function f, Function g) {
         this.f = f;
         this.g = g;
-        this.c = c;
+
     }
 
     @Override

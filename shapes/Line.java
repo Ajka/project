@@ -14,10 +14,10 @@ public class Line implements Shape{
    
     @Override
     public void paint(Graphics g) {        
-            Dot d1=new Dot(c1);
+          /*  Dot d1=new Dot(c1);
             d1.paint(g);
             Dot d2=new Dot(c2);
-            d2.paint(g);
+            d2.paint(g);*/
             g.drawLine((int)c1.getRe(),(int)c1.getIm(),(int)c2.getRe(),(int)c2.getIm());                 
     }
     

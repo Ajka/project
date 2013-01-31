@@ -1,7 +1,5 @@
 package project;
 
-import project.shapes.Dot;
-
 public class Complex {
 
     double re;
@@ -70,6 +68,43 @@ public class Complex {
         return result;
     }
 
+    public Complex exp() {
+        return new Complex(Math.exp(re) * Math.cos(im) / 300, Math.exp(re) * Math.sin(im) / 300);
+    }
+
+    public Complex sin() {
+        return new Complex(Math.sin(re) * Math.cosh(im) / 200, Math.cos(re) * Math.sinh(im) / 200);
+    }
+
+    public Complex cos() {
+        return new Complex(Math.cos(re) * Math.cosh(im), -Math.sin(re) * Math.sinh(im));
+    }
+
+    public Complex tan() {
+        return sin().div(cos());
+    }
+
+    public Complex log() {
+        double rpart = Math.sqrt(re * re + im * im);
+        double ipart = Math.atan2(im, re);
+        if(ipart > Math.PI) {
+            ipart = ipart - 2.0 * Math.PI;
+        }
+        return new Complex(Math.log(rpart), ipart);
+    }
+
+    /*public Complex sqrt(){
+     double r=Math.sqrt(re*re+im*im);
+     double rpart=Math.sqrt(0.5*(r+re));
+     double ipart=Math.sqrt(0.5*(r-re));
+     if(im<0.0) ipart=-ipart;
+     return new Complex(rpart,ipart);
+     }*/
+    public Complex pow(Complex z) {
+        Complex a = z.mul(this.log());
+        return a.exp();
+    }
+
     public Complex fromPolar(double magnitude, double angle) {
         Complex result = new Complex();
         result.setRe(magnitude * Math.cos(angle));
@@ -84,6 +119,4 @@ public class Complex {
     public double getAngle() {
         return Math.atan2(this.im, this.re);
     }
-
-   
 }

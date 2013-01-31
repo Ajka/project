@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import project.shapes.Line;
+import project.shapes.SetOfLines;
 
 public class MyPanel extends JPanel {
 
@@ -18,6 +19,7 @@ public class MyPanel extends JPanel {
     Complex c1 = new Complex(0.0, 50.0);
     Complex c2 = new Complex(0.0, -50.0);
     public Line l = new Line(c1, c2);
+    public SetOfLines set = new SetOfLines();
 
     public MyPanel() {
 
@@ -57,10 +59,6 @@ public class MyPanel extends JPanel {
 
 
         g.setColor(Color.BLACK);
-
-        l.paint(g);
-
-
 
     }
 }
