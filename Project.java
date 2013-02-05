@@ -13,13 +13,17 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import project.functions.Composite;
+import project.functions.Exponentiation;
+import project.functions.Multiplication;
 import project.functions.Sine;
+import project.shapes.Dot;
 import project.shapes.Line;
 
 public class Project extends JPanel implements ActionListener {
 
     private JButton continuously;
     private Timer timer;
+    private int pressed;
 
     public Project() {
         final MyPanel pattern = new MyPanel();
@@ -27,7 +31,8 @@ public class Project extends JPanel implements ActionListener {
 
         JPanel buttons = new JPanel();
         //JPanel panel = new JPanel();
-
+        JButton b_dot = new JButton("Bod");
+        JButton b_line = new JButton("Úsečka");
         JButton b_set = new JButton("Mriežka");
         JButton draw = new JButton("Vykresli");
         JButton clear = new JButton("Zmaž");
@@ -37,13 +42,48 @@ public class Project extends JPanel implements ActionListener {
         add(buttons);
         //add(panel);
 
-        buttons.setLayout(new GridLayout(1, 3));
-        buttons.add(b_set);
+        buttons.setLayout(new GridLayout(3, 2));
+
+        buttons.add(b_dot);
         buttons.add(draw);
+        buttons.add(b_line);
         buttons.add(clear);
+        buttons.add(b_set);
 
         //panel.setLayout(new GridLayout(2, 0));
+        
+        b_dot.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {               
+                Graphics g1 = image.getGraphics();
+                g1.translate(150, 150);               
+                image.centreDot.paint(g1);
+                Graphics g2 = pattern.getGraphics();
+                g2.translate(150, 150);
+                pattern.centreDot.paint(g2);
+                pressed = 1;
+            }
+        ;
+        }
+        );
 
+        
+        b_line.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                Graphics g1 = image.getGraphics();
+                g1.translate(150, 150);
+                image.l.paint(g1);
+                Graphics g2 = pattern.getGraphics();
+                g2.translate(150, 150);
+                pattern.l.paint(g2);
+                pressed = 2;
+            }
+        ;
+        }
+        );
+        
+        
         b_set.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -53,65 +93,43 @@ public class Project extends JPanel implements ActionListener {
                 Graphics g2 = pattern.getGraphics();
                 g2.translate(150, 150);
                 pattern.set.paint(g2);
+                pressed = 3;
             }
         ;
         }
-   );
+        );
         
        
-       /* JLabel compl = new JLabel("z +");
-        panel.add(compl);
-        final JTextField inputreal = new JTextField(3);
-        panel.add(inputreal);
-        JLabel real = new JLabel("+");
-        panel.add(real);
-        final JTextField inputimag = new JTextField(3);
-        panel.add(inputimag);
-        JLabel imag = new JLabel("i");
-        panel.add(imag);
-
-        JLabel zmult = new JLabel("z *");
-        panel.add(zmult);
-        final JTextField inreal = new JTextField(3);
-        panel.add(inreal);
-        JLabel mreal = new JLabel("+");
-        panel.add(mreal);
-        final JTextField inimag = new JTextField(3);
-        panel.add(inimag);
-        JLabel mimag = new JLabel("i");
-        panel.add(mimag);
-*/
-
-
         draw.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-
-                /*  Scanner s1=new Scanner(inputreal.getText());
-                 Scanner s2=new Scanner(inputimag.getText());
-                 Complex c= new Complex(s1.nextDouble(),s2.nextDouble());
-                 Function add= new Addition(c);
-                 //add.drawImage(image.l, image);
-                 //System.out.println(image.l.c1.re+" " +image.l.c1.im);
-                
-               
-                 Scanner s3=new Scanner(inreal.getText());
-                 Scanner s4=new Scanner(inimag.getText());
-                 Complex c2= new Complex(s3.nextDouble(),s4.nextDouble());
-                
-                 Function multiplication=new Multiplication(c2);              
-                 //multiplication.drawImage(image.l, image);
-                 Function compos = new Composite(add, multiplication);
-                 Function exp = new Exponentiation();*/
+                Function exp = new Exponentiation();
                 Function add = new Addition(new Complex(20.0, 20.0));
+                Function mul=new Multiplication(new Complex(1.0,1.0));
                 Function sin = new Sine();
-                Function compos = new Composite(add, sin);
+                Function compos = new Composite(add, mul);
 
                 image.paintComponent(image.getGraphics());
-                for (Line l : image.set.lines) {
-                    compos.drawImage(l, image);
+                switch (pressed) {
+                    case 1:                  
+                        Complex c = compos.evaluate(image.centre);
+                        Dot d = new Dot(c);
+                        Graphics g = image.getGraphics();
+                        g.translate(150, 150);
+                        d.paint(g);
+                        break;
+                    case 2:
+                        compos.drawImage(image.l, image);                       
+                        break;
+                    case 3:
+                        for (Line l : image.set.lines) {
+                            compos.drawImage(l, image);
+                        }
+                        break;
                 }
-            };
+
+            }
+        ;
         });
     
         
@@ -120,8 +138,11 @@ public class Project extends JPanel implements ActionListener {
             public void actionPerformed(ActionEvent event) {
                 System.out.println("zmaz");
                 repaint();
-            };
-        });
+            }
+        ;
+    }
+
+    );
         
     }
        
