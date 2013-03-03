@@ -108,7 +108,7 @@ public class Project extends JPanel implements ActionListener {
                 Function mul=new Multiplication(new Complex(1.0,1.0));
                 Function sin = new Sine();
                 Function compos = new Composite(add, mul);*/
-                Parser p = new Parser("((70,0 + 5,0 i) + ((1,0 + 1,0 i) * z))");
+                Parser p = new Parser("(((s((1,0 + 1,0 i)*z))+(70,0 + 4,0 i))");
                 Function compos = p.parse();
 
                 image.paintComponent(image.getGraphics());
