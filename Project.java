@@ -103,12 +103,12 @@ public class Project extends JPanel implements ActionListener {
         draw.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-              /*  Function exp = new Exponentiation();
+              /*  Function exp = new Exponentiation()
                 Function add = new Addition(new Complex(20.0, 20.0));
                 Function mul=new Multiplication(new Complex(1.0,1.0));
                 Function sin = new Sine();
                 Function compos = new Composite(add, mul);*/
-                Parser p = new Parser("(((s((1,0 + 1,0 i)*z))+(70,0 + 4,0 i))");
+                Parser p = new Parser("( (10,1+2,5i) * 5 +  sin z * (2+0,5i) )");
                 Function compos = p.parse();
 
                 image.paintComponent(image.getGraphics());
