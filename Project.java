@@ -9,7 +9,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import project.functions.Composite;
@@ -28,6 +30,7 @@ public class Project extends JPanel implements ActionListener {
     public Project() {
         final MyPanel pattern = new MyPanel();
         final MyPanel image = new MyPanel();
+        final JTextField input = new JTextField(20); 
 
         JPanel buttons = new JPanel();
         //JPanel panel = new JPanel();
@@ -39,6 +42,7 @@ public class Project extends JPanel implements ActionListener {
 
         add(pattern);
         add(image);
+        add(input);
         add(buttons);
         //add(panel);
 
@@ -108,7 +112,7 @@ public class Project extends JPanel implements ActionListener {
                 Function mul=new Multiplication(new Complex(1.0,1.0));
                 Function sin = new Sine();
                 Function compos = new Composite(add, mul);*/
-                Parser p = new Parser("( (10,1+2,5i) * 5 +  sin z * (2+0,5i) )");
+                Parser p = new Parser(input.getText());
                 Function compos = p.parse();
 
                 image.paintComponent(image.getGraphics());

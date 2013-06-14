@@ -31,7 +31,13 @@ public class Parser {
     public Function f = new Composite(id, id);
 
     public Parser(String s) {
-        this.s = s;
+      
+        StringBuilder sb = new StringBuilder("( ");
+        sb.append(s);
+        sb.append(" )");
+        String s1 = new String(sb);
+        this.s = s1;
+           
         priority.add("(");
         priority.add("+");
         priority.add("-");
@@ -50,10 +56,10 @@ public class Parser {
     public Function parse() {
         System.out.println(s);
 
-        StringTokenizer st = new StringTokenizer(s);
+        StringTokenizer tokenizer = new StringTokenizer(s);
 
-        while (st.hasMoreTokens()) {
-            String str = st.nextToken();
+        while (tokenizer.hasMoreTokens()) {
+            String str = tokenizer.nextToken();
 
             last = operation_stack.get(operation_stack.size() - 1);
             if (str.equals("(")) {
@@ -147,6 +153,9 @@ public class Parser {
                 Exponentiation exp = new Exponentiation();
                 func = new Composite(exp, f);
                 break;
+            case ' ':
+                func =f;
+                break;            
         }
         return func;
 
