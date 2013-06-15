@@ -1,7 +1,6 @@
 package project;
 
 import java.awt.Graphics;
-import project.functions.Addition;
 import project.functions.Function;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -9,22 +8,14 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-import javax.swing.Timer;
-import project.functions.Composite;
-import project.functions.Exponentiation;
-import project.functions.Multiplication;
-import project.functions.Sine;
 import project.shapes.Dot;
 import project.shapes.Line;
 
 public class Project extends JPanel implements ActionListener {
-
-    private JButton continuously;
-    private Timer timer;
+    
     private int pressed;
 
     public Project() {
@@ -39,6 +30,7 @@ public class Project extends JPanel implements ActionListener {
         JButton b_set = new JButton("Mriežka");
         JButton draw = new JButton("Vykresli");
         JButton clear = new JButton("Zmaž");
+        JButton continuously = new JButton("Plynule");
 
         add(pattern);
         add(image);
@@ -51,9 +43,10 @@ public class Project extends JPanel implements ActionListener {
         buttons.add(b_dot);
         buttons.add(draw);
         buttons.add(b_line);
-        buttons.add(clear);
+        buttons.add(continuously);
         buttons.add(b_set);
-
+        buttons.add(clear);
+        
         //panel.setLayout(new GridLayout(2, 0));
         
         b_dot.addActionListener(new ActionListener() {
@@ -137,7 +130,37 @@ public class Project extends JPanel implements ActionListener {
             }
         ;
         });
-    
+        
+        continuously.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+            
+                Parser p = new Parser(input.getText());
+                Function compos = p.parse();
+
+                image.paintComponent(image.getGraphics());
+                switch (pressed) {
+                 /*  case 1:                  
+                        Complex c = compos.evaluate(image.centre);
+                        Dot d = new Dot(c);
+                        Graphics g = image.getGraphics();
+                        g.translate(150, 150);
+                        d.paint(g);
+                        break;
+                */    case 2:
+                        compos.drawImage2(image.l, image);                       
+                        break;
+                /*    case 3:
+                        for (Line l : image.set.lines) {
+                            compos.drawImage2(l, image);
+                        }
+                        break;
+                */
+                }
+            }
+        ;
+        });
+        
         
         clear.addActionListener(new ActionListener() {
             @Override
@@ -145,12 +168,12 @@ public class Project extends JPanel implements ActionListener {
                 System.out.println("zmaz");
                 repaint();
             }
-        ;
-    }
+            ;
+            }
 
-    );
+         );
         
-    }
+ }
        
     private static void createAndShowGUI() {
         JFrame frame = new JFrame("Komplexne funkcie");

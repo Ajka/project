@@ -1,10 +1,8 @@
 package project;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Scanner;
 import java.util.StringTokenizer;
-import project.Complex;
 import project.functions.Addition;
 import project.functions.Composite;
 import project.functions.Cosine;
@@ -72,10 +70,10 @@ public class Parser {
                     } else {
                         simplify(last);
                     }
-                    operation_stack.remove(last);
+                    operation_stack.remove(operation_stack.size() - 1);
                     last = operation_stack.get(operation_stack.size() - 1);
                 }
-                operation_stack.remove(last);
+                operation_stack.remove(operation_stack.size() - 1);
 
             } else if (priority.indexOf(str) > -1) { //nie je to cislo, ale op.
 
@@ -155,7 +153,7 @@ public class Parser {
                 break;
             case ' ':
                 func =f;
-                break;            
+                break;      
         }
         return func;
 
@@ -199,7 +197,7 @@ public class Parser {
                 complex_stack.remove(complex_stack.get(complex_stack.size() - 1));
                 complex_stack.remove(complex_stack.get(complex_stack.size() - 2));
                 complex_stack.add(result);
-                break;
+                break;    
         }
 
     }
@@ -207,7 +205,7 @@ public class Parser {
     private Complex parse_complex(String substring) {
 
         StringBuilder sb = new StringBuilder(substring);
-
+        Scanner s;
         double r = 0.0;
         double i = 0.0;
 
@@ -221,15 +219,15 @@ public class Parser {
             sb.insert(sb.indexOf("+"), " ");
             sb.deleteCharAt(sb.indexOf("+"));
             sb.insert(sb.indexOf("i"), " ");
-            Scanner s = new Scanner(sb.toString());
+            s = new Scanner(sb.toString());
             r = s.nextDouble();
             i = s.nextDouble();
         } else if (sb.indexOf("i") > 0) {
             sb.insert(sb.indexOf("i"), " ");
-            Scanner s = new Scanner(sb.toString());
+            s = new Scanner(sb.toString());
             i = s.nextDouble();
         } else {
-            Scanner s = new Scanner(sb.toString());
+            s = new Scanner(sb.toString());
             r = s.nextDouble();
         }
 
