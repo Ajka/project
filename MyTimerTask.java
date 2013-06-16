@@ -27,8 +27,8 @@ public class MyTimerTask extends TimerTask {
     public void run() {
 
         if (i <= n) {
-            g.clearRect(-150, -150, 300, 300);
-
+           g.clearRect(-150, -150, 300, 300);
+for(Line l : image.set.lines){
             Complex tmp1 = f.evaluate(l.c1);
             double re1 = ((n - i) * l.c1.getRe() / n + i * tmp1.getRe() / n);
             double im1 = ((n - i) * l.c1.getIm() / n + i * tmp1.getIm() / n);
@@ -50,6 +50,8 @@ public class MyTimerTask extends TimerTask {
 
                 tmp1 = tmp2;
             }
+            
+        }
             i++;
             
         } else {

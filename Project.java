@@ -150,12 +150,12 @@ public class Project extends JPanel implements ActionListener {
                 */    case 2:
                         compos.drawImage2(image.l, image);                       
                         break;
-                /*    case 3:
+                      case 3:
                         for (Line l : image.set.lines) {
                             compos.drawImage2(l, image);
                         }
                         break;
-                */
+                
                 }
             }
         ;

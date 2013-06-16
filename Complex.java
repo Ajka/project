@@ -77,7 +77,7 @@ public class Complex {
     }
 
     public Complex cos() {
-        return new Complex(Math.cos(re) * Math.cosh(im), -Math.sin(re) * Math.sinh(im));
+        return new Complex(Math.cos(re) * Math.cosh(im) / 200, -Math.sin(re) * Math.sinh(im) / 200);
     }
 
     public Complex tan() {
