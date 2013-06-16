@@ -5,6 +5,7 @@ import project.functions.Function;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -13,11 +14,12 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import project.shapes.Dot;
 import project.shapes.Line;
+import project.shapes.SetOfLines;
 
 public class Project extends JPanel implements ActionListener {
     
     private int pressed;
-
+   
     public Project() {
         final MyPanel pattern = new MyPanel();
         final MyPanel image = new MyPanel();
@@ -69,11 +71,15 @@ public class Project extends JPanel implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent event) {
                 Graphics g1 = image.getGraphics();
-                g1.translate(150, 150);
-                image.l.paint(g1);
+                g1.translate(150, 150); 
+                image.set = new SetOfLines(new ArrayList<Line>() );
+                image.set.addLine(image.l1);
+                image.set.paint(g1);
                 Graphics g2 = pattern.getGraphics();
                 g2.translate(150, 150);
-                pattern.l.paint(g2);
+                pattern.set = new SetOfLines(new ArrayList<Line>() );
+                pattern.set.addLine(pattern.l1);
+                pattern.set.paint(g2);
                 pressed = 2;
             }
         ;
@@ -86,9 +92,11 @@ public class Project extends JPanel implements ActionListener {
             public void actionPerformed(ActionEvent event) {
                 Graphics g1 = image.getGraphics();
                 g1.translate(150, 150);
+                image.set = new SetOfLines();
                 image.set.paint(g1);
                 Graphics g2 = pattern.getGraphics();
                 g2.translate(150, 150);
+                pattern.set = new SetOfLines();
                 pattern.set.paint(g2);
                 pressed = 3;
             }
@@ -118,7 +126,7 @@ public class Project extends JPanel implements ActionListener {
                         d.paint(g);
                         break;
                     case 2:
-                        compos.drawImage(image.l, image);                       
+                        compos.drawImage(image.set.lines.get(0), image);                       
                         break;
                     case 3:
                         for (Line l : image.set.lines) {
@@ -148,9 +156,9 @@ public class Project extends JPanel implements ActionListener {
                         d.paint(g);
                         break;
                 */    case 2:
-                        compos.drawImage2(image.l, image);                       
+                        compos.drawImage2(image.set.lines.get(0), image);                       
                         break;
-                      case 3:
+                    case 3:
                         for (Line l : image.set.lines) {
                             compos.drawImage2(l, image);
                         }

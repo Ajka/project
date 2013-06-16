@@ -40,7 +40,7 @@ public abstract class Function {
         Graphics g = image.getGraphics();
 
         g.translate(150, 150);
-        MyTimerTask draw = new MyTimerTask(l, image, this);
+        MyTimerTask draw = new MyTimerTask(image, this);
         timer.schedule(draw, 0, delay);
     }
 }

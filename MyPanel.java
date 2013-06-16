@@ -4,6 +4,7 @@ import project.shapes.Dot;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import project.shapes.Line;
@@ -18,11 +19,13 @@ public class MyPanel extends JPanel {
     public Dot centreDot = new Dot(centre);
     Complex c1 = new Complex(0.0, 50.0);
     Complex c2 = new Complex(0.0, -50.0);
-    public Line l = new Line(c1, c2);
-    public SetOfLines set = new SetOfLines();
+    public Line l1 = new Line(c1, c2);
+    public ArrayList<Line> line = new ArrayList<Line>();
+   // public SetOfLines l = new SetOfLines(line);
+    public SetOfLines set;// = new SetOfLines();
 
     public MyPanel() {
-
+       // l.addLine(l1);
 
         int height = getHeight();
         int width = getWidth();
