@@ -185,7 +185,7 @@ public class Parser {
                 complex_stack.add(result);
                 break;
             case '/':
-                Division d = new Division(complex_stack.get(complex_stack.size() - 1), complex_stack.get(complex_stack.size() - 2));
+                Division d = new Division(complex_stack.get(complex_stack.size() - 2), complex_stack.get(complex_stack.size() - 1));
                 result = d.evaluate();
                 complex_stack.remove(complex_stack.get(complex_stack.size() - 1));
                 complex_stack.remove(complex_stack.get(complex_stack.size() - 2));

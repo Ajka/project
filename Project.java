@@ -108,11 +108,6 @@ public class Project extends JPanel implements ActionListener {
         draw.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-              /*  Function exp = new Exponentiation()
-                Function add = new Addition(new Complex(20.0, 20.0));
-                Function mul=new Multiplication(new Complex(1.0,1.0));
-                Function sin = new Sine();
-                Function compos = new Composite(add, mul);*/
                 Parser p = new Parser(input.getText());
                 Function compos = p.parse();
 
