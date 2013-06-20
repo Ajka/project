@@ -1,6 +1,7 @@
 package project.functions;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import project.Complex;
 import project.MyPanel;
 import java.util.Timer;
@@ -14,7 +15,9 @@ public abstract class Function {
     public void drawImage(Line l, MyPanel image) {
 
         Graphics g = image.getGraphics();
-        g.translate(150, 150);
+        Graphics2D g2 = (Graphics2D) g;
+        g2.translate(150, 150);
+        g2.scale(1,-1);
 
         Complex tmp1 = this.evaluate(l.c1);
         int p = 10;
@@ -25,7 +28,7 @@ public abstract class Function {
             Complex tmp2 = this.evaluate(new Complex(re, im));
 
             Line tmpLine = new Line(tmp1, tmp2);
-            tmpLine.paint(g);
+            tmpLine.paint(g2);
 
             tmp1 = tmp2;
 
@@ -35,11 +38,7 @@ public abstract class Function {
 
     public void drawImage2(Line l, MyPanel image) {
         int delay = 100;
-        Timer timer = new Timer();
-
-        Graphics g = image.getGraphics();
-
-        g.translate(150, 150);
+        Timer timer = new Timer(); 
         MyTimerTask draw = new MyTimerTask(image, this);
         timer.schedule(draw, 0, delay);
     }

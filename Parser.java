@@ -158,7 +158,7 @@ public class Parser {
         return func;
 
     }
-
+   
     private void simplify(String str) {
         char op = str.charAt(0);
         Complex result;
@@ -228,7 +228,7 @@ public class Parser {
                 complex_stack.remove(complex_stack.get(complex_stack.size() - 1));
                 complex_stack.add(result);
                 break;    
-                
+                               
                 
         }
 

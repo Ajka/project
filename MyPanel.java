@@ -4,6 +4,7 @@ import project.shapes.Dot;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -40,25 +41,22 @@ public class MyPanel extends JPanel {
     public void paintComponent(final Graphics g) {
 
         super.paintComponent(g);
-        /*  Graphics2D g2 = (Graphics2D) g;
-         g2.scale(1.0,-1.0);*/
-
-
         int height = getHeight();
         int width = getWidth();
-        g.translate(width / 2, width / 2);
-        /* AffineTransform aftransfom= new AffineTransform(); 
-         aftransfom.scale(1.0, -1.0);*/
+        
+        Graphics2D g2 = (Graphics2D) g;
+        g2.translate(width / 2, width / 2);       
+        g2.scale(1, -1); 
+        
+        g2.drawRect(-width / 2, -height / 2, height - 1, width - 1);
+        g2.setColor(Color.LIGHT_GRAY);
+        g2.fillOval(0 - (int) r / 2, 0 - (int) r / 2, (int) r, (int) r);
+        
+        //g2.fillOval(20, 20, 5,5); 
+        
+        g2.drawLine((int) -width / 2, 0, width, 0);
+        g2.drawLine(0, (int) -height / 2, 0, height);
 
-        g.drawRect(-width / 2, -height / 2, height - 1, width - 1);
-
-        g.setColor(Color.LIGHT_GRAY);
-        g.fillOval(0 - (int) r / 2, 0 - (int) r / 2, (int) r, (int) r);
-        g.drawLine((int) -width / 2, 0, width, 0);
-        g.drawLine(0, (int) -height / 2, 0, height);
-
-
-        g.setColor(Color.BLACK);
-
+        g2.setColor(Color.BLACK);
     }
 }

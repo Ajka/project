@@ -1,6 +1,7 @@
 package project.shapes;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import project.Complex;
 
 public class Line implements Shape{
@@ -14,11 +15,9 @@ public class Line implements Shape{
    
     @Override
     public void paint(Graphics g) {        
-          /*  Dot d1=new Dot(c1);
-            d1.paint(g);
-            Dot d2=new Dot(c2);
-            d2.paint(g);*/
-            g.drawLine((int)c1.getRe(),(int)c1.getIm(),(int)c2.getRe(),(int)c2.getIm());                 
+        
+            Graphics2D g2 = (Graphics2D) g;
+            g2.drawLine((int)c1.getRe(),(int)c1.getIm(),(int)c2.getRe(),(int)c2.getIm());                 
     }
     
 }

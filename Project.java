@@ -41,7 +41,7 @@ public class Project extends JPanel implements ActionListener {
         //add(panel);
 
         buttons.setLayout(new GridLayout(3, 2));
-
+      
         buttons.add(b_dot);
         buttons.add(draw);
         buttons.add(b_line);

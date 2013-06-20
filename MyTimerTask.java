@@ -1,6 +1,7 @@
 package project;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.TimerTask;
 import project.functions.Function;
 import project.shapes.Line;
@@ -11,6 +12,7 @@ public class MyTimerTask extends TimerTask {
     Function f;
     private int i = 0;
     Graphics g;
+    Graphics2D g2;
     int p = 10;
     int n = 50;
 
@@ -18,14 +20,16 @@ public class MyTimerTask extends TimerTask {
         this.image = image;
         this.f = f;
         g = image.getGraphics();
-        g.translate(150, 150);
+        g2 = (Graphics2D) g;
+        g2.translate(150, 150);
+        g2.scale(1,-1);
 
     }
     
     public void run() {
 
         if (i <= n) {
-            g.clearRect(-150, -150, 300, 300);
+            g2.clearRect(-150, -150, 300, 300);
             for (Line l : image.set.lines) {
                 Complex tmp1 = f.evaluate(l.c1);
                 double re1 = ((n - i) * l.c1.getRe() / n + i * tmp1.getRe() / n);
@@ -44,7 +48,7 @@ public class MyTimerTask extends TimerTask {
                     tmp2.setIm(im2);
 
                     Line tmpLine = new Line(tmp1, tmp2);
-                    tmpLine.paint(g);
+                    tmpLine.paint(g2);
 
                     tmp1 = tmp2;
                 }
