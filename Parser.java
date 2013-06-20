@@ -197,7 +197,39 @@ public class Parser {
                 complex_stack.remove(complex_stack.get(complex_stack.size() - 1));
                 complex_stack.remove(complex_stack.get(complex_stack.size() - 2));
                 complex_stack.add(result);
+                break; 
+            case 's':
+                Sine sine = new Sine();
+                result = sine.evaluate(complex_stack.get(complex_stack.size() - 1));
+                complex_stack.remove(complex_stack.get(complex_stack.size() - 1));
+                complex_stack.add(result);
+                break;   
+            case 'c':
+                Cosine cos = new Cosine();
+                result = cos.evaluate(complex_stack.get(complex_stack.size() - 1));
+                complex_stack.remove(complex_stack.get(complex_stack.size() - 1));
+                complex_stack.add(result);
+                break; 
+            case 't':
+                Tangent tg = new Tangent();
+                result = tg.evaluate(complex_stack.get(complex_stack.size() - 1));
+                complex_stack.remove(complex_stack.get(complex_stack.size() - 1));
+                complex_stack.add(result);
+                break;  
+            case 'l':
+                Logarithm log = new Logarithm();
+                result = log.evaluate(complex_stack.get(complex_stack.size() - 1));
+                complex_stack.remove(complex_stack.get(complex_stack.size() - 1));
+                complex_stack.add(result);
+                break;  
+            case 'e':
+                Exponentiation exp = new Exponentiation();
+                result = exp.evaluate(complex_stack.get(complex_stack.size() - 1));
+                complex_stack.remove(complex_stack.get(complex_stack.size() - 1));
+                complex_stack.add(result);
                 break;    
+                
+                
         }
 
     }

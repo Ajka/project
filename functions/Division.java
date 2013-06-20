@@ -19,7 +19,7 @@ public class Division extends Function {
     public Complex evaluate() {
         return c.div(d);
     }
-    
+        
     @Override
     public Complex evaluate(Complex z) {
         return z.div(c);
