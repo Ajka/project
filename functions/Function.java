@@ -12,12 +12,12 @@ public abstract class Function {
 
     public abstract Complex evaluate(Complex z);
 
-    public void drawImage(Line l, MyPanel image) {
+    public void drawImage(Line l, MyPanel image, double x, double y) {
 
         Graphics g = image.getGraphics();
         Graphics2D g2 = (Graphics2D) g;
         g2.translate(150, 150);
-        g2.scale(1,-1);
+        g2.scale(x,y);
 
         Complex tmp1 = this.evaluate(l.c1);
         int p = 10;

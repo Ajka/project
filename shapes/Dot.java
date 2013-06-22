@@ -2,6 +2,7 @@ package project.shapes;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import project.Complex;
 
 public class Dot implements Shape {
@@ -58,8 +59,10 @@ public class Dot implements Shape {
 */
     public void paint(Graphics g) {
         Color c = Color.BLACK;
-        g.setColor(c);
-        g.fillOval((int) x - (int) r / 2, (int) y - (int) r / 2, (int) r, (int) r);
+        Graphics2D g2 = (Graphics2D) g;
+        g2.scale(1,-1);
+        g2.setColor(c);
+        g2.fillOval((int) x - (int) r / 2, (int) y - (int) r / 2, (int) r, (int) r);
     }
 
     public Complex toComplex() {

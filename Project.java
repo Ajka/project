@@ -19,12 +19,14 @@ import project.shapes.SetOfLines;
 public class Project extends JPanel implements ActionListener {
     
     private int pressed;
+    double x = 1.0;
+    double y = -1.0;
    
     public Project() {
         final MyPanel pattern = new MyPanel();
         final MyPanel image = new MyPanel();
         final JTextField input = new JTextField(20); 
-
+       
         JPanel buttons = new JPanel();
         //JPanel panel = new JPanel();
         JButton b_dot = new JButton("Bod");
@@ -33,6 +35,8 @@ public class Project extends JPanel implements ActionListener {
         JButton draw = new JButton("Vykresli");
         JButton clear = new JButton("Zmaž");
         JButton continuously = new JButton("Plynule");
+        JButton zoomIn = new JButton("+");
+        JButton zoomOut = new JButton("-");
 
         add(pattern);
         add(image);
@@ -40,7 +44,7 @@ public class Project extends JPanel implements ActionListener {
         add(buttons);
         //add(panel);
 
-        buttons.setLayout(new GridLayout(3, 2));
+        buttons.setLayout(new GridLayout(4, 2));
       
         buttons.add(b_dot);
         buttons.add(draw);
@@ -48,8 +52,32 @@ public class Project extends JPanel implements ActionListener {
         buttons.add(continuously);
         buttons.add(b_set);
         buttons.add(clear);
-        
+        buttons.add(zoomIn);
+        buttons.add(zoomOut);
+                
         //panel.setLayout(new GridLayout(2, 0));
+               
+        zoomIn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {                              
+                x*=1.1;
+                y*=1.1;
+                draw(input, image, x, y);         
+            }
+        ;
+        }
+        );
+        
+            zoomOut.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {                                            
+                x*=0.9;
+                y*=0.9;
+                draw(input, image, x, y);                
+            }
+        ;
+        }
+        );
         
         b_dot.addActionListener(new ActionListener() {
             @Override
@@ -108,28 +136,7 @@ public class Project extends JPanel implements ActionListener {
         draw.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                Parser p = new Parser(input.getText());
-                Function compos = p.parse();
-
-                image.paintComponent(image.getGraphics());
-                switch (pressed) {
-                    case 1:                  
-                        Complex c = compos.evaluate(image.centre);
-                        Dot d = new Dot(c);
-                        Graphics g = image.getGraphics();
-                        g.translate(150, 150);
-                        d.paint(g);
-                        break;
-                    case 2:
-                        compos.drawImage(image.set.lines.get(0), image);                       
-                        break;
-                    case 3:
-                        for (Line l : image.set.lines) {
-                            compos.drawImage(l, image);
-                        }
-                        break;
-                }
-
+                draw(input, image, x, y);
             }
         ;
         });
@@ -143,14 +150,7 @@ public class Project extends JPanel implements ActionListener {
 
                 image.paintComponent(image.getGraphics());
                 switch (pressed) {
-                 /*  case 1:                  
-                        Complex c = compos.evaluate(image.centre);
-                        Dot d = new Dot(c);
-                        Graphics g = image.getGraphics();
-                        g.translate(150, 150);
-                        d.paint(g);
-                        break;
-                */    case 2:
+                    case 2:
                         compos.drawImage2(image.set.lines.get(0), image);                       
                         break;
                     case 3:
@@ -169,6 +169,8 @@ public class Project extends JPanel implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent event) {
                 System.out.println("zmaz");
+                x=1;
+                y=-1;
                 repaint();
             }
             ;
@@ -177,6 +179,28 @@ public class Project extends JPanel implements ActionListener {
          );
         
  }
+     public void draw(JTextField input,MyPanel image, double x, double y){
+         Parser p = new Parser(input.getText());
+                Function compos = p.parse();                
+                image.paintComponent(image.getGraphics());
+                switch (pressed) {
+                    case 1:                  
+                        Complex c = compos.evaluate(image.centre);
+                        Dot d = new Dot(c);
+                        Graphics g = image.getGraphics();
+                        g.translate(150, 150);
+                        d.paint(g);
+                        break;
+                    case 2:
+                        compos.drawImage(image.set.lines.get(0), image, x, y);                       
+                        break;
+                    case 3:
+                        for (Line l : image.set.lines) {
+                            compos.drawImage(l, image,x, y);
+                        }
+                        break;
+                }       
+        }
        
     private static void createAndShowGUI() {
         JFrame frame = new JFrame("Komplexne funkcie");
