@@ -2,6 +2,7 @@ package project;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Stack;
 import java.util.StringTokenizer;
 import project.functions.Addition;
 import project.functions.Composite;
@@ -19,8 +20,8 @@ import project.functions.Tangent;
 public class Parser {
 
     private String s;
-    private ArrayList<Complex> complex_stack = new ArrayList<Complex>();
-    private ArrayList<String> operation_stack = new ArrayList<String>();
+    private Stack <Complex> complex_stack = new Stack<Complex>();
+    private Stack <String> operation_stack = new Stack <String>();
     private ArrayList<String> priority = new ArrayList<String>();
     private String last;
     private boolean complex_format = true;
@@ -59,9 +60,9 @@ public class Parser {
         while (tokenizer.hasMoreTokens()) {
             String str = tokenizer.nextToken();
 
-            last = operation_stack.get(operation_stack.size() - 1);
+            last = operation_stack.peek();
             if (str.equals("(")) {
-                operation_stack.add(str);
+                operation_stack.push(str);
             } else if (str.equals(")")) {
                 //vyhodnocuje az po predch. zatvorku
                 while (!last.equals("(")) {
@@ -70,15 +71,15 @@ public class Parser {
                     } else {
                         simplify(last);
                     }
-                    operation_stack.remove(operation_stack.size() - 1);
-                    last = operation_stack.get(operation_stack.size() - 1);
+                    operation_stack.pop();
+                    last = operation_stack.peek();
                 }
-                operation_stack.remove(operation_stack.size() - 1);
+                operation_stack.pop();
 
             } else if (priority.indexOf(str) > -1) { //nie je to cislo, ale op.
 
                 if (priority.indexOf(str) >= priority.indexOf(last)) {
-                    operation_stack.add(str);
+                    operation_stack.push(str);
                 } else {
                     if (wasZ) {
                         f = createFunction(last, f);
@@ -86,13 +87,13 @@ public class Parser {
                         simplify(last);
                     }
                     operation_stack.remove(last);
-                    operation_stack.add(str);
+                    operation_stack.push(str);
                 }
             } else if (str.equals("z")) {
                 wasZ = true;
             } else {
                 Complex c = parse_complex(str);
-                complex_stack.add(c);
+                complex_stack.push(c);
             }
 
 
@@ -107,29 +108,24 @@ public class Parser {
         char op = str.charAt(0);
         switch (op) {
             case '+':
-                Addition a = new Addition(complex_stack.get(complex_stack.size() - 1));
+                Addition a = new Addition(complex_stack.pop());
                 func = new Composite(a, f);
-                complex_stack.remove(complex_stack.get(complex_stack.size() - 1));
                 break;
             case '-':
-                Subtraction s = new Subtraction(complex_stack.get(complex_stack.size() - 1));
+                Subtraction s = new Subtraction(complex_stack.pop());
                 func = new Composite(s, f);
-                complex_stack.remove(complex_stack.size() - 1);
                 break;
             case '*':
-                Multiplication m = new Multiplication(complex_stack.get(complex_stack.size() - 1));
+                Multiplication m = new Multiplication(complex_stack.pop());
                 func = new Composite(m, f);
-                complex_stack.remove(complex_stack.size() - 1);
                 break;
             case '/':
-                Division d = new Division(complex_stack.get(complex_stack.size() - 1));
+                Division d = new Division(complex_stack.pop());
                 func = new Composite(d, f);
-                complex_stack.remove(complex_stack.size() - 1);
                 break;
             case '^':
-                Power p = new Power(complex_stack.get(complex_stack.size() - 1));
+                Power p = new Power(complex_stack.pop());
                 func = new Composite(p, f);
-                complex_stack.remove(complex_stack.size() - 1);
                 break;
             case 's':
                 Sine sin = new Sine();
@@ -161,75 +157,61 @@ public class Parser {
    
     private void simplify(String str) {
         char op = str.charAt(0);
-        Complex result;
+        Complex result, tmp;
         switch (op) {
             case '+':
-                Addition a = new Addition(complex_stack.get(complex_stack.size() - 1), complex_stack.get(complex_stack.size() - 2));
+                Addition a = new Addition(complex_stack.pop(), complex_stack.pop());
                 result = a.evaluate();
-                complex_stack.remove(complex_stack.get(complex_stack.size() - 1));
-                complex_stack.remove(complex_stack.get(complex_stack.size() - 2));
-                complex_stack.add(result);
+                complex_stack.push(result);
                 break;
             case '-':
-                Subtraction s = new Subtraction(complex_stack.get(complex_stack.size() - 1), complex_stack.get(complex_stack.size() - 2));
+                tmp = complex_stack.pop();
+                Subtraction s = new Subtraction(complex_stack.pop(), tmp);
                 result = s.evaluate();
-                complex_stack.remove(complex_stack.get(complex_stack.size() - 1));
-                complex_stack.remove(complex_stack.get(complex_stack.size() - 2));
-                complex_stack.add(result);
+                complex_stack.push(result);
                 break;
             case '*':
-                Multiplication m = new Multiplication(complex_stack.get(complex_stack.size() - 1), complex_stack.get(complex_stack.size() - 2));
+                Multiplication m = new Multiplication(complex_stack.pop(), complex_stack.pop());
                 result = m.evaluate();
-                complex_stack.remove(complex_stack.get(complex_stack.size() - 1));
-                complex_stack.remove(complex_stack.get(complex_stack.size() - 2));
-                complex_stack.add(result);
+                complex_stack.push(result);
                 break;
             case '/':
-                Division d = new Division(complex_stack.get(complex_stack.size() - 2), complex_stack.get(complex_stack.size() - 1));
+                tmp = complex_stack.pop();
+                Division d = new Division(complex_stack.pop(), tmp);
                 result = d.evaluate();
-                complex_stack.remove(complex_stack.get(complex_stack.size() - 1));
-                complex_stack.remove(complex_stack.get(complex_stack.size() - 2));
-                complex_stack.add(result);
+                complex_stack.push(result);
                 break;
             case '^':
-                Power p = new Power(complex_stack.get(complex_stack.size() - 2), complex_stack.get(complex_stack.size() - 1));//pozor, opacne argumenty
+                tmp = complex_stack.pop();
+                Power p = new Power(complex_stack.pop(), tmp);
                 result = p.evaluate();
-                complex_stack.remove(complex_stack.get(complex_stack.size() - 1));
-                complex_stack.remove(complex_stack.get(complex_stack.size() - 2));
-                complex_stack.add(result);
+                complex_stack.push(result);
                 break; 
             case 's':
                 Sine sine = new Sine();
-                result = sine.evaluate(complex_stack.get(complex_stack.size() - 1));
-                complex_stack.remove(complex_stack.get(complex_stack.size() - 1));
-                complex_stack.add(result);
+                result = sine.evaluate(complex_stack.pop());
+                complex_stack.push(result);
                 break;   
             case 'c':
                 Cosine cos = new Cosine();
-                result = cos.evaluate(complex_stack.get(complex_stack.size() - 1));
-                complex_stack.remove(complex_stack.get(complex_stack.size() - 1));
-                complex_stack.add(result);
+                result = cos.evaluate(complex_stack.pop());
+                complex_stack.push(result);
                 break; 
             case 't':
                 Tangent tg = new Tangent();
-                result = tg.evaluate(complex_stack.get(complex_stack.size() - 1));
-                complex_stack.remove(complex_stack.get(complex_stack.size() - 1));
-                complex_stack.add(result);
+                result = tg.evaluate(complex_stack.pop());
+                complex_stack.push(result);
                 break;  
             case 'l':
                 Logarithm log = new Logarithm();
-                result = log.evaluate(complex_stack.get(complex_stack.size() - 1));
-                complex_stack.remove(complex_stack.get(complex_stack.size() - 1));
-                complex_stack.add(result);
+                result = log.evaluate(complex_stack.pop());
+                complex_stack.push(result);
                 break;  
             case 'e':
                 Exponentiation exp = new Exponentiation();
-                result = exp.evaluate(complex_stack.get(complex_stack.size() - 1));
-                complex_stack.remove(complex_stack.get(complex_stack.size() - 1));
-                complex_stack.add(result);
-                break;    
-                               
-                
+                result = exp.evaluate(complex_stack.pop());
+                complex_stack.push(result);
+                break;                                 
         }
 
     }
