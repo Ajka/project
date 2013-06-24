@@ -5,24 +5,18 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
-import project.shapes.Line;
-import project.shapes.SetOfLines;
+import project.shapes.Shape;
 
 public class MyPanel extends JPanel {
 
     private static final long serialVersionUID = 1301836524800050587L;
     private double x = 75;
     private double r = 7.0;
-    Complex centre = new Complex(0.0, 0.0);
+    public Complex centre = new Complex(0.0, 0.0);
     public Dot centreDot = new Dot(centre);
-    Complex c1 = new Complex(0.0, 50.0);
-    Complex c2 = new Complex(0.0, -50.0);
-    public Line l1 = new Line(c1, c2);
-    public ArrayList<Line> line = new ArrayList<Line>();
-    public SetOfLines set;
+    public Shape shape;
 
     public MyPanel() {
 

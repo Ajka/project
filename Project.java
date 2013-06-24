@@ -5,7 +5,6 @@ import project.functions.Function;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -18,10 +17,9 @@ import project.shapes.SetOfLines;
 
 public class Project extends JPanel implements ActionListener {
 
-    private int pressed;
     double x = 1.0;
     double y = -1.0;
-
+       
     public Project() {
         final MyPanel pattern = new MyPanel();
         final MyPanel image = new MyPanel();
@@ -68,7 +66,7 @@ public class Project extends JPanel implements ActionListener {
         }
         );
         
-            zoomOut.addActionListener(new ActionListener() {
+        zoomOut.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
                 x *= 0.9;
@@ -84,11 +82,12 @@ public class Project extends JPanel implements ActionListener {
             public void actionPerformed(ActionEvent event) {
                 Graphics g1 = image.getGraphics();
                 g1.translate(150, 150);
-                image.centreDot.paint(g1);
+                image.shape = new Dot();
+                image.shape.paint(g1);
                 Graphics g2 = pattern.getGraphics();
                 g2.translate(150, 150);
-                pattern.centreDot.paint(g2);
-                pressed = 1;
+                pattern.shape = new Dot();
+                pattern.shape.paint(g2);
             }
         ;
         }
@@ -100,15 +99,14 @@ public class Project extends JPanel implements ActionListener {
             public void actionPerformed(ActionEvent event) {
                 Graphics g1 = image.getGraphics();
                 g1.translate(150, 150);
-                image.set = new SetOfLines(new ArrayList<Line>());
-                image.set.addLine(image.l1);
-                image.set.paint(g1);
+                Complex c1 = new Complex(0.0, 50.0);
+                Complex c2 = new Complex(0.0, -50.0);
+                image.shape = new Line(c1, c2);
+                image.shape.paint(g1);
                 Graphics g2 = pattern.getGraphics();
                 g2.translate(150, 150);
-                pattern.set = new SetOfLines(new ArrayList<Line>());
-                pattern.set.addLine(pattern.l1);
-                pattern.set.paint(g2);
-                pressed = 2;
+                pattern.shape = new Line(c1, c2);
+                pattern.shape.paint(g2);
             }
         ;
         }
@@ -120,13 +118,12 @@ public class Project extends JPanel implements ActionListener {
             public void actionPerformed(ActionEvent event) {
                 Graphics g1 = image.getGraphics();
                 g1.translate(150, 150);
-                image.set = new SetOfLines();
-                image.set.paint(g1);
+                image.shape = new SetOfLines();
+                image.shape.paint(g1);
                 Graphics g2 = pattern.getGraphics();
                 g2.translate(150, 150);
-                pattern.set = new SetOfLines();
-                pattern.set.paint(g2);
-                pressed = 3;
+                pattern.shape = new SetOfLines();
+                pattern.shape.paint(g2);
             }
         ;
         }
@@ -144,22 +141,10 @@ public class Project extends JPanel implements ActionListener {
         continuously.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-
                 Parser p = new Parser(input.getText());
-                Function compos = p.parse();
-
-                image.paintComponent(image.getGraphics());
-                switch (pressed) {
-                    case 2:
-                        compos.drawImage2(image.set.lines.get(0), image);
-                        break;
-                    case 3:
-                        for (Line l : image.set.lines) {
-                            compos.drawImage2(l, image);
-                        }
-                        break;
-
-                }
+                Function f = p.parse();
+              //  image.paintComponent(image.getGraphics());                
+                image.shape.drawCont(f, image);  
             }
         ;
         });
@@ -168,7 +153,7 @@ public class Project extends JPanel implements ActionListener {
         clear.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                System.out.println("zmaz");
+                System.out.println("zmaz");             
                 x = 1;
                 y = -1;
                 repaint();
@@ -179,25 +164,9 @@ public class Project extends JPanel implements ActionListener {
     
     public void draw(JTextField input, MyPanel image, double x, double y) {
         Parser p = new Parser(input.getText());
-        Function compos = p.parse();
+        Function f = p.parse();
         image.paintComponent(image.getGraphics());
-        switch (pressed) {
-            case 1:
-                Complex c = compos.evaluate(image.centre);
-                Dot d = new Dot(c);
-                Graphics g = image.getGraphics();
-                g.translate(150, 150);
-                d.paint(g);
-                break;
-            case 2:
-                compos.drawImage(image.set.lines.get(0), image, x, y);
-                break;
-            case 3:
-                for (Line l : image.set.lines) {
-                    compos.drawImage(l, image, x, y);
-                }
-                break;
-        }
+        image.shape.drawImage(f, image, x, y);                     
     }
 
     private static void createAndShowGUI() {

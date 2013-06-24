@@ -2,13 +2,16 @@ package project;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 import java.util.TimerTask;
 import project.functions.Function;
 import project.shapes.Line;
+import project.shapes.SetOfLines;
 
 public class MyTimerTask extends TimerTask {
  
     MyPanel image;
+    ArrayList<Line> lines = new ArrayList<Line>();
     Function f;
     private int i = 0;
     Graphics g;
@@ -16,9 +19,21 @@ public class MyTimerTask extends TimerTask {
     int p = 10;
     int n = 50;
 
-    public MyTimerTask(MyPanel image, Function f) {
+    public MyTimerTask(MyPanel image, Function f, SetOfLines set) {
         this.image = image;
         this.f = f;
+        this.lines = set.lines;
+        g = image.getGraphics();
+        g2 = (Graphics2D) g;
+        g2.translate(150, 150);
+        g2.scale(1,-1);
+
+    }
+    
+    public MyTimerTask(MyPanel image, Function f, Line l) {
+        this.image = image;
+        this.f = f;
+        this.lines.add(l);
         g = image.getGraphics();
         g2 = (Graphics2D) g;
         g2.translate(150, 150);
@@ -30,7 +45,7 @@ public class MyTimerTask extends TimerTask {
 
         if (i <= n) {
             g2.clearRect(-150, -150, 300, 300);
-            for (Line l : image.set.lines) {
+            for (Line l : lines) {
                 Complex tmp1 = f.evaluate(l.c1);
                 double re1 = ((n - i) * l.c1.getRe() / n + i * tmp1.getRe() / n);
                 double im1 = ((n - i) * l.c1.getIm() / n + i * tmp1.getIm() / n);

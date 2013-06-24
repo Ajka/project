@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import project.Complex;
+import project.MyPanel;
+import project.functions.Function;
 
 public class Dot implements Shape {
 
@@ -28,39 +30,10 @@ public class Dot implements Shape {
         this.r = r;
     }
 
-    /* public Dot(Dot d) {
-     this.x = d.getX();
-     this.y = d.getY();
-     this.r = d.getR();
-     }*/
-    /*public void setX(double x) {
-        this.x = x;
-    }
-
-    public double getX() {
-        return x;
-    }
-
-    public void setY(double y) {
-        this.y = y;
-    }
-
-    public double getY() {
-        return y;
-    }
-
-    public double getR() {
-        return r;
-    }
-
-    public void setR(double w) {
-        this.r = w;
-    }
-*/
     public void paint(Graphics g) {
         Color c = Color.BLACK;
         Graphics2D g2 = (Graphics2D) g;
-        g2.scale(1,-1);
+        g2.scale(1, -1);
         g2.setColor(c);
         g2.fillOval((int) x - (int) r / 2, (int) y - (int) r / 2, (int) r, (int) r);
     }
@@ -73,8 +46,20 @@ public class Dot implements Shape {
 
     }
 
-   /* public boolean inDot(double x, double y) {
-        return (x >= this.x - r / 2) && (x <= this.x + r / 2)
-                && (y >= this.y - r / 2) && (y <= this.y + r / 2);
-    }*/
+    @Override
+    public void drawImage(Function f, MyPanel image, double x, double y) {
+        Complex c = f.evaluate(image.centre);
+        Dot d = new Dot(c);
+        Graphics g = image.getGraphics();
+        g.translate(150, 150);
+        d.paint(g);
+    }
+
+    @Override
+    public void drawCont(Function f, MyPanel image) {Complex c = f.evaluate(image.centre);
+        Dot d = new Dot(c);
+        Graphics g = image.getGraphics();
+        g.translate(150, 150);
+        d.paint(g);;
+    }
 }
