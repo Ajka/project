@@ -75,7 +75,7 @@ public class SetOfLines implements Shape {
         int delay = 100;
         Timer timer = new Timer(); 
         MyTimerTask draw = new MyTimerTask(image, f, this);
-        timer.schedule(draw, 0, delay);
+        timer.schedule(draw, 0, delay);       
         
     }
 }

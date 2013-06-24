@@ -69,15 +69,15 @@ public class Complex {
     }
 
     public Complex exp() {
-        return new Complex(Math.exp(re) * Math.cos(im) / 300, Math.exp(re) * Math.sin(im) / 300);
+        return new Complex(Math.exp(re) * Math.cos(im), Math.exp(re) * Math.sin(im));
     }
 
     public Complex sin() {
-        return new Complex(Math.sin(re) * Math.cosh(im) / 200, Math.cos(re) * Math.sinh(im) / 200);
+        return new Complex(Math.sin(re) * Math.cosh(im), Math.cos(re) * Math.sinh(im));
     }
 
     public Complex cos() {
-        return new Complex(Math.cos(re) * Math.cosh(im) / 200, -Math.sin(re) * Math.sinh(im) / 200);
+        return new Complex(Math.cos(re) * Math.cosh(im), -Math.sin(re) * Math.sinh(im));
     }
 
     public Complex tan() {

@@ -4,24 +4,16 @@ import project.Complex;
 
 public class Subtraction extends Function {
 
-    Complex c;
-    Complex d;
-
-    public Subtraction(Complex c) {
-        this.c = c;
+    Function f;
+    Function g;
+    
+    public Subtraction(Function f, Function g) {
+        this.f = f;
+        this.g = g;
     }
-   
-    public Subtraction(Complex c, Complex d) {
-        this.c = c;
-        this.d = d;
-    }
-
-    public Complex evaluate() {
-        return c.sub(d);
-    }   
     
     @Override
     public Complex evaluate(Complex z) {
-        return z.sub(c);
+        return f.evaluate(z).sub(g.evaluate(z));
     }
 }

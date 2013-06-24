@@ -5,11 +5,12 @@ import java.util.Scanner;
 import java.util.Stack;
 import java.util.StringTokenizer;
 import project.functions.Addition;
-import project.functions.Composite;
+import project.functions.Constant;
 import project.functions.Cosine;
 import project.functions.Division;
 import project.functions.Exponentiation;
 import project.functions.Function;
+import project.functions.Identity;
 import project.functions.Logarithm;
 import project.functions.Multiplication;
 import project.functions.Power;
@@ -20,14 +21,13 @@ import project.functions.Tangent;
 public class Parser {
 
     private String s;
-    private Stack <Complex> complex_stack = new Stack<Complex>();
+    private Stack <Function> function_stack = new Stack<Function>();
     private Stack <String> operation_stack = new Stack <String>();
     private ArrayList<String> priority = new ArrayList<String>();
     private String last;
     private boolean complex_format = true;
-    private boolean wasZ = false;
-    Function id = new Addition(new Complex(0.0, 0.0));
-    public Function f = new Composite(id, id);
+    Function id = new Identity();
+    public Function f = id;
 
     public Parser(String s) {
       
@@ -49,7 +49,7 @@ public class Parser {
         priority.add("log");
         priority.add("e");
         operation_stack.add(" ");
-        complex_stack.add(null);
+        //complex_stack.add(null);
     }
 
     public Function parse() {
@@ -63,14 +63,10 @@ public class Parser {
             last = operation_stack.peek();
             if (str.equals("(")) {
                 operation_stack.push(str);
-            } else if (str.equals(")")) {
+            } else if (str.equals(")")) {           
                 //vyhodnocuje az po predch. zatvorku
                 while (!last.equals("(")) {
-                    if (wasZ) {
-                        f = createFunction(last, f);
-                    } else {
-                        simplify(last);
-                    }
+                    f = createFunction(last, f);
                     operation_stack.pop();
                     last = operation_stack.peek();
                 }
@@ -81,22 +77,20 @@ public class Parser {
                 if (priority.indexOf(str) >= priority.indexOf(last)) {
                     operation_stack.push(str);
                 } else {
-                    if (wasZ) {
-                        f = createFunction(last, f);
-                    } else {
-                        simplify(last);
+                    while (priority.indexOf(str) < priority.indexOf(last)) {
+                        f = createFunction(last, f);                        
+                        operation_stack.remove(last);                        
+                        last = operation_stack.peek(); 
                     }
-                    operation_stack.remove(last);
                     operation_stack.push(str);
                 }
             } else if (str.equals("z")) {
-                wasZ = true;
+                function_stack.push(id);
             } else {
                 Complex c = parse_complex(str);
-                complex_stack.push(c);
-            }
-
-
+                Function constant = new Constant(c);
+                function_stack.push(constant);
+            }           
         }
         // System.out.println(operation_stack);
         // System.out.println(complex_stack);
@@ -105,117 +99,72 @@ public class Parser {
 
     private Function createFunction(String str, Function f) {
         Function func = null;
+        Function tmp;
         char op = str.charAt(0);
         switch (op) {
             case '+':
-                Addition a = new Addition(complex_stack.pop());
-                func = new Composite(a, f);
+                Addition a = new Addition(function_stack.pop(), function_stack.pop());
+                func = a;
+                function_stack.push(func);              
                 break;
             case '-':
-                Subtraction s = new Subtraction(complex_stack.pop());
-                func = new Composite(s, f);
+                tmp = function_stack.pop();
+                Subtraction s = new Subtraction(function_stack.pop(), tmp);
+                func = s;
+                function_stack.push(func);
                 break;
             case '*':
-                Multiplication m = new Multiplication(complex_stack.pop());
-                func = new Composite(m, f);
+                Multiplication m = new Multiplication(function_stack.pop(), function_stack.pop());
+                func = m;
+                function_stack.push(func); 
                 break;
             case '/':
-                Division d = new Division(complex_stack.pop());
-                func = new Composite(d, f);
+                tmp = function_stack.pop();
+                Division d = new Division(function_stack.pop(), tmp);
+                func = d;
+                function_stack.push(func);
                 break;
             case '^':
-                Power p = new Power(complex_stack.pop());
-                func = new Composite(p, f);
+                tmp = function_stack.pop();
+                Power p = new Power(function_stack.pop(), tmp);
+                func = p;
+                function_stack.push(func);
                 break;
-            case 's':
-                Sine sin = new Sine();
-                func = new Composite(sin, f);
+            case 's':     
+                Sine sin = new Sine(function_stack.pop());              
+                func = sin;
+                function_stack.push(func);
                 break;
             case 'c':
-                Cosine cos = new Cosine();
-                func = new Composite(cos, f);
+                Cosine cos = new Cosine(function_stack.pop());
+                func = cos;
+                function_stack.push(func);
                 break;
             case 't':
-                Tangent tg = new Tangent();
-                func = new Composite(tg, f);
+                Tangent tg = new Tangent(function_stack.pop());
+                func = tg;
+                function_stack.push(func);
                 break;
             case 'l':
-                Logarithm log = new Logarithm();
-                func = new Composite(log, f);
+                Logarithm log = new Logarithm(function_stack.pop());
+                func = log;
+                function_stack.push(func);
                 break;
             case 'e':
-                Exponentiation exp = new Exponentiation();
-                func = new Composite(exp, f);
+                Exponentiation exp = new Exponentiation(function_stack.pop());
+                func = exp;
+                function_stack.push(func);
                 break;
-            case ' ':
-                func =f;
-                break;      
+        /*  case ' ':
+                func = complex_stack.pop();
+                System.out.println("*"+func);
+                break; */
+                
         }
         return func;
-
+        
     }
    
-    private void simplify(String str) {
-        char op = str.charAt(0);
-        Complex result, tmp;
-        switch (op) {
-            case '+':
-                Addition a = new Addition(complex_stack.pop(), complex_stack.pop());
-                result = a.evaluate();
-                complex_stack.push(result);
-                break;
-            case '-':
-                tmp = complex_stack.pop();
-                Subtraction s = new Subtraction(complex_stack.pop(), tmp);
-                result = s.evaluate();
-                complex_stack.push(result);
-                break;
-            case '*':
-                Multiplication m = new Multiplication(complex_stack.pop(), complex_stack.pop());
-                result = m.evaluate();
-                complex_stack.push(result);
-                break;
-            case '/':
-                tmp = complex_stack.pop();
-                Division d = new Division(complex_stack.pop(), tmp);
-                result = d.evaluate();
-                complex_stack.push(result);
-                break;
-            case '^':
-                tmp = complex_stack.pop();
-                Power p = new Power(complex_stack.pop(), tmp);
-                result = p.evaluate();
-                complex_stack.push(result);
-                break; 
-            case 's':
-                Sine sine = new Sine();
-                result = sine.evaluate(complex_stack.pop());
-                complex_stack.push(result);
-                break;   
-            case 'c':
-                Cosine cos = new Cosine();
-                result = cos.evaluate(complex_stack.pop());
-                complex_stack.push(result);
-                break; 
-            case 't':
-                Tangent tg = new Tangent();
-                result = tg.evaluate(complex_stack.pop());
-                complex_stack.push(result);
-                break;  
-            case 'l':
-                Logarithm log = new Logarithm();
-                result = log.evaluate(complex_stack.pop());
-                complex_stack.push(result);
-                break;  
-            case 'e':
-                Exponentiation exp = new Exponentiation();
-                result = exp.evaluate(complex_stack.pop());
-                complex_stack.push(result);
-                break;                                 
-        }
-
-    }
-
     private Complex parse_complex(String substring) {
 
         StringBuilder sb = new StringBuilder(substring);

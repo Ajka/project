@@ -143,7 +143,7 @@ public class Project extends JPanel implements ActionListener {
             public void actionPerformed(ActionEvent event) {
                 Parser p = new Parser(input.getText());
                 Function f = p.parse();
-              //  image.paintComponent(image.getGraphics());                
+                image.paintComponent(image.getGraphics());                
                 image.shape.drawCont(f, image);  
             }
         ;

@@ -2,27 +2,18 @@ package project.functions;
 
 import project.Complex;
 
-public class Addition extends Function {
-
-    Complex c;
-    Complex d;
+public class Addition extends Function{
     
-    public Addition(Complex c) {
-        this.c = c;
-    }
+    Function f;
+    Function g;
     
-    public Addition(Complex c,Complex d) {
-        this.c = c;
-        this.d = d;
-    }
-    
-   
-    public Complex evaluate() {
-        return c.add(d);
-    }
+    public Addition(Function f,Function g) {
+        this.f = f;
+        this.g = g;
+    }   
 
     @Override
     public Complex evaluate(Complex z) {
-        return z.add(c);
+        return f.evaluate(z).add(g.evaluate(z));
     }
 }
